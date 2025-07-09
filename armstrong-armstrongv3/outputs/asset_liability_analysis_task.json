@@ -1,0 +1,206 @@
+{
+  "personal_information": {
+    "name": "Hari Das",
+    "date_of_birth": "1994-11-17",
+    "year_of_birth": 1994
+  },
+  "family_information": {
+    "spouse_year_of_birth": 1993
+  },
+  "expenses": {
+    "household_expenses_monthly": 110000.0
+  },
+  "assets": [
+    {
+      "type": "provident_fund",
+      "present_value": 628729.0,
+      "monthly_contribution": 25800.0
+    },
+    {
+      "type": "public_provident_fund",
+      "present_value": 451600.0,
+      "monthly_contribution": 3600.0
+    },
+    {
+      "type": "fixed_deposit",
+      "present_value": 300000.0,
+      "monthly_contribution": null
+    },
+    {
+      "type": "direct_equity",
+      "present_value": 26936.0,
+      "monthly_contribution": null
+    },
+    {
+      "type": "mutual_funds",
+      "present_value": 525794.0,
+      "monthly_contribution": null
+    },
+    {
+      "type": "cash_or_cash_at_bank",
+      "present_value": 277800.0,
+      "monthly_contribution": null
+    },
+    {
+      "type": "gold_etf",
+      "present_value": 2500.0,
+      "monthly_contribution": null
+    },
+    {
+      "type": "crypto",
+      "present_value": 50000.0,
+      "monthly_contribution": null
+    },
+    {
+      "type": "ornamental_gold",
+      "present_value": 250000.0,
+      "monthly_contribution": null
+    }
+  ],
+  "liabilities": {
+    "loans": [
+      {
+        "type": "car_loan",
+        "outstanding_amount": 213000.0,
+        "interest_rate": 0.12,
+        "emi_amount": 17800.0,
+        "tenure_months": 12,
+        "ending_year": 2024
+      },
+      {
+        "type": "personal_loan",
+        "outstanding_amount": 467150.0,
+        "interest_rate": 0.1,
+        "emi_amount": 24500.0,
+        "tenure_months": 19,
+        "ending_year": 2025
+      }
+    ]
+  },
+  "future_plans": {
+    "coast_retirement": {
+      "time_years": 10,
+      "amount_required_today": 38000000,
+      "amount_available_today": null
+    },
+    "sibling_wedding": {
+      "time_years": 5,
+      "amount_required_today": 1500000,
+      "amount_available_today": null
+    },
+    "higher_education": {
+      "time_years": 3,
+      "amount_required_today": 10000000,
+      "amount_available_today": null
+    },
+    "home_loan_down_payment": {
+      "time_years": 10,
+      "amount_required_today": 5000000,
+      "amount_available_today": null
+    },
+    "vacations": {
+      "time_years": 1,
+      "amount_required_today": 500000,
+      "amount_available_today": null
+    },
+    "car": {
+      "time_years": 4,
+      "amount_required_today": 4500000,
+      "amount_available_today": 0
+    },
+    "electronic_gadget_or_clothes": {
+      "time_years": 1,
+      "amount_required_today": 200000,
+      "amount_available_today": 0
+    },
+    "car_2": {
+      "time_years": 10,
+      "amount_required_today": 10000000,
+      "amount_available_today": 0
+    },
+    "car_3": {
+      "time_years": 12,
+      "amount_required_today": 50000000,
+      "amount_available_today": 0
+    }
+  },
+  "miscellaneous": {
+    "retirement_age": 45,
+    "current_year": 2023
+  },
+  "client_profile": {
+    "current_client_age": null,
+    "years_to_retirement": null,
+    "retirement_horizon_classification": null,
+    "equity_exposure_status": "Yes",
+    "risk_appetite": null
+  },
+  "children_education_profiles_calculations": [],
+  "asset_liability_analysis": {
+    "total_asset_value_numeric": 2513359.0,
+    "total_liabilities_value_numeric": 680150.0,
+    "net_worth_numeric": 1833209.0,
+    "asset_classification_summary": {
+      "liquid_assets": 1433030.0,
+      "retirement_assets": 1080329.0,
+      "fixed_assets": 0.0
+    },
+    "asset_bucket_proportions": {
+      "liquid_assets": 57.02,
+      "retirement_assets": 42.98,
+      "fixed_assets": 0.0
+    },
+    "individual_asset_proportions": [
+      {
+        "asset_category": "provident_fund",
+        "value": 628729.0,
+        "proportion_percentage": 25.02
+      },
+      {
+        "asset_category": "public_provident_fund",
+        "value": 451600.0,
+        "proportion_percentage": 17.97
+      },
+      {
+        "asset_category": "fixed_deposit",
+        "value": 300000.0,
+        "proportion_percentage": 11.94
+      },
+      {
+        "asset_category": "direct_equity",
+        "value": 26936.0,
+        "proportion_percentage": 1.07
+      },
+      {
+        "asset_category": "mutual_funds",
+        "value": 525794.0,
+        "proportion_percentage": 20.92
+      },
+      {
+        "asset_category": "cash_or_cash_at_bank",
+        "value": 277800.0,
+        "proportion_percentage": 11.05
+      },
+      {
+        "asset_category": "gold_etf",
+        "value": 2500.0,
+        "proportion_percentage": 0.1
+      },
+      {
+        "asset_category": "crypto",
+        "value": 50000.0,
+        "proportion_percentage": 1.99
+      },
+      {
+        "asset_category": "ornamental_gold",
+        "value": 250000.0,
+        "proportion_percentage": 9.95
+      }
+    ]
+  },
+  "financial_goals": null,
+  "retirement_plan": null,
+  "education_plans": null,
+  "debt_management_plan": null,
+  "financial_health_audit": null
+}

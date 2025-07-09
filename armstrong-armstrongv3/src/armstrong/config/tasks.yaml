@@ -1,0 +1,430 @@
+############################# Task 1: Data Extraction Task ##############################
+data_extraction_task:
+  description: >
+    Your objective is to process the financial data from the provided, input sheet: '{input_sheet}' and present it into `InitialClientData` pydantic model.
+    First, extract ALL raw data from the input sheet and structure it into a single JSON .
+    During this initial extraction, try your best to:
+      - Use snake_case for dictionary keys (e.g., 'personal_information', 'date_of_birth').
+      - For items in any 'assets' list, use the key 'present_value' for the current monetary value.
+      - For 'type' fields within assets or loans, try to output their values in snake_case
+        (e.g., 'provident_fund' instead of 'Provident Fund').
+      - Ensure the 'liabilities' section has a 'loans' key containing a list of loan objects.
+      - Structure data to align with the `InitialClientData` model, but prioritize
+        capturing all information accurately over perfect initial snake_case formatting if there's a conflict.
+
+    **CRITICAL FINAL STEP (MANDATORY):**
+    After you have formed your initial JSON object from the input sheet:
+    1.  You MUST call the 'JsonSnakeCaseConverterTool' exactly ONCE.
+    2.  Provide the complete JSON object you just extracted from the input sheet as the
+        'json_data' argument to this 'JsonSnakeCaseConverterTool'.
+    3.  The 'JsonSnakeCaseConverterTool' will take your extracted JSON object,
+        comprehensively convert all keys at all levels to `snake_case`,
+        standardize specific keys (like ensuring 'present_value' for assets),
+        and normalize specific string values (like asset and loan types) to `snake_case`, if any leftout.
+        It will return a perfectly formatted and standardized JSON string object.
+    
+    The expected input to the 'JsonSnakeCaseConverterTool' is: 
+      
+      Input Action:    {'json_data':{
+      "personal_information": {"name": "string", "date_of_birth": "YYYY-MM-DD", "year_of_birth": "int", ...},
+      "family_information": {"spouse_year_of_birth": "integer_or_null", ...},
+      "expenses": {"household_expenses_monthly": "float", ...},
+      "assets": [{"type": "provident_fund", "present_value": "float", "monthly_contribution": "float_or_null", ...}, ...],
+      "liabilities": {"loans": [{"type": "car_loan", "outstanding_amount": "float", ...}, ...], ...},
+      "future_plans": {"coast_retirement": {"time_years": "integer_or_null", ...}, ...},   
+      "miscellaneous": {"retirement_age": "integer_or_null", "current_year": "integer_or_null", ...}
+        }}
+
+    Provide the input to the Tool as shown above do not add any double quotes or convert the whole thing in string.
+    Your FINAL ANSWER for this entire task MUST be the exact, unmodified JSON object
+    returned by the 'JsonSnakeCaseConverterTool'.
+    DO NOT add any introductory text, explanations, concluding remarks, or markdown
+    **YOU MUST STORE THE OUTPUT OF THIS TASK AS `initial_client_data_json`. **
+  expected_output: >
+    A single, valid, programmatically-normalized JSON object that strictly conforms to the
+    `InitialClientData` Pydantic model. 
+    All keys at all levels of the JSON structure MUST be in `snake_case`. 
+    Specific keys like 'present_value' for assets will be standardized, and string values for fields like asset/loan 'type' will also be in `snake_case`.
+    The output will be precisely what the 'JsonSnakeCaseConverterTool' returns.
+    The structure should be:
+    '{
+      "personal_information": {"name": "string", "date_of_birth": "YYYY-MM-DD", "year_of_birth": "int", ...},
+      "family_information": {"spouse_year_of_birth": "integer_or_null", ...},
+      "expenses": {"household_expenses_monthly": "float", ...},
+      "assets": [{"type": "provident_fund", "present_value": "float", "monthly_contribution": "float_or_null", ...}, ...],
+      "liabilities": {"loans": [{"type": "car_loan", "outstanding_amount": "float", ...}, ...], ...},
+      "future_plans": {"coast_retirement": {"time_years": "integer_or_null", ...}, ...},   
+      "miscellaneous": {"retirement_age": "integer_or_null", "current_year": "integer_or_null", ...}
+    }'
+
+  agent: data_extractor
+
+############################## Task 2: Client Profiling Task ##############################
+client_profiling_task:
+  description: >
+    **Your Strict 3-Step Process:**
+
+    STEP 1: CALCULATE PROFILE ELEMENTS
+        *   Call the `ComprehensiveProfileCalculatorTool` exactly ONCE.
+        *  The action input for tool `ComprehensiveProfileCalculatorTool` is:
+            {"client_data_json": output of task `data_extraction_task` provided in the context }
+
+        * Strictly follow this structure only for the input. 
+        * Store the output of this tool as 'profile_calculations'
+      
+    STEP 2: MERGE `client_profile_calculations_json` INTO FullClientData (Tool Call)
+
+        You MUST call the ClientDataMergeTool exactly ONCE.
+
+        To do this, construct an Action Input JSON object. This Action Input JSON object
+        itself MUST have the following keys:
+
+        "initial_client_data_json": <<output of task `data_extraction_task` provided in the context>> 
+
+        "client_profile_calculations_json": 'profile_calculations'
+
+        Correct Example of Action Input Structure for ClientDataMergeTool:
+        
+        JSON```
+        {
+        "inputs":
+        {
+          "initial_client_data":<<output of task `data_extraction_task` provided in the context>>,
+          "client_profile_calculations": <<'profile_calculations'>>
+        }}```
+        
+        Do not send this is in square bracket enclosed, 
+        The ClientDataMergeTool will return a new, updated JSON representing the FullClientData object,
+        now including the `client_profile` field with your generated data.
+
+    3.  **FINAL OUTPUT:**
+        *   Your final answer for this task MUST be the exact, unmodified JSON object returned by the `ClientDataMergeTool` in Step 2.
+            DO NOT add any introductory text, concluding remarks, or markdown formatting around the JSON object.
+
+    You must save the output as `current_full_client_data_json` for future reference. 
+    Ensure all keys and field names remain snake_case throughout your process and in the final output.
+  expected_output: >
+    A single, valid JSON representing a `FullClientData` Pydantic object.
+    This object must include ALL original data fields from `InitialClientData`
+    AND the newly populated `client_profile` and `children_education_profiles_calculations` attributes.
+    All other top-level analytical sections of `FullClientData` (like `asset_liability_analysis`, `financial_goals`, etc.)
+    MUST be present and explicitly set to `null`.
+    All keys and field names in the final JSON object and any nested structures must be in snake_case.
+    The structure should strictly conform to the `FullClientData` Pydantic model.
+    A structural example (illustrative, actual values will vary):
+    `{
+      "personal_information": { "...": "..." },
+      "family_information": { "...": "..." },
+      "expenses": { "...": "..." },
+      "assets": [ ... ],
+      "liabilities": { "...": "..." },
+      "future_plans": { "...": "..." },
+      "miscellaneous": { "...": "..." },
+      "client_profile": { "current_client_age": "int_or_null", "years_to_retirement": "int_or_null", "retirement_horizon_classification": "string_or_null", "equity_exposure_status": "string_or_null", "risk_appetite": "string_or_null" },
+      "children_education_profiles_calculations": [ { "child_identifier": "string", "child_current_age": "int", ... } ],
+      "asset_liability_analysis": null,
+      "financial_goals": null,
+      "retirement_plan": null,
+      "education_plans": null,
+      "debt_management_plan": null,
+      "financial_health_audit": null
+    }`
+  agent: ClientProfilerAgent
+
+############################## Task 3: Asset & Liability Analysis Task ##############################
+asset_liability_analysis_task:
+  description: >
+    You will be provided with the output of task `client_profiling_task` in json object.
+
+    **Follow this EXACT 3-Step Process:**
+
+    STEP 1.  **CALCULATE ASSET & LIABILITY ANALYSIS:**
+        *   Call the `ComprehensiveAssetLiabilityAnalysisTool` exactly ONCE.
+        * You must pass the JSON object of output of task `client_profiling_task` to this tool.
+
+        ACTION INPUT: 
+            {
+            `client_data_json`: <<output of the task `client_profiling_task`, provided in the context>>
+            }
+
+        * Do not send this in square brackets, like [], and do not enclose the whole Input json in "", strictly follow the ACTION INPUT only.
+        *   The tool will return a JSON object. This json object contains ONLY the newly calculated
+            asset and liability analysis elements (conforming to the `AssetLiabilityAnalysis` Pydantic model),
+            all using snake_case keys.
+        *   Store this returned JSON objcet as `new_asset_liability_analysis_json`.
+
+    STEP 2: MERGE `new_asset_liability_analysis_json` INTO FullClientData (Tool Call)
+
+          You MUST call the ClientDataMergeTool exactly ONCE.
+
+          To do this, construct an Action Input JSON object. This Action Input JSON object
+          itself MUST have the following keys:
+
+          1. initial_client_data, 2. asset_liability_analysis
+
+          Correct Example of Action Input Structure for ClientDataMergeTool:
+          
+          JSON```
+          {
+          "inputs":
+          {
+            "initial_client_data":  <<output of the task `client_profiling_task`, provided in the context>>,
+            "asset_liability_analysis": <<The full JSON object, obtained in STEP 1, `new_asset_liability_analysis_json` >>
+          }}```
+
+          Strictly follow the above INPUT ACTION for the tool `ClientDataMergeTool`, so that the tool works. 
+          The ClientDataMergeTool will return a new, updated JSON representing the FullClientData object,
+          now including the `asset_liability_analysis` field with your generated data.
+
+    STEP 3:  **FINAL OUTPUT:**
+        *   Your final answer for this task MUST be the exact, unmodified JSON object returned by the
+            `ClientDataMergeTool` in Step 2.
+            DO NOT add any introductory text, concluding remarks, or markdown formatting around the JSON object.
+
+    Ensure all keys and field names remain snake_case throughout your inputs to tools and in your final output.
+  expected_output: >
+    A single, valid JSON object representing a `FullClientData` Pydantic object.
+    This object must include ALL previously existing data from the input context (initial data, client profile)
+    AND the newly populated `asset_liability_analysis` attribute.
+    All keys and field names in the final JSON object and any nested structures must be in snake_case.
+    All other top-level analytical sections not yet calculated (e.g., `financial_goals`, `retirement_plan`)
+    MUST be present (if they were in the input context) or set to None.
+    The structure should strictly conform to the `FullClientData` Pydantic model.
+    
+    **Expected Final Output**
+
+        A single updated JSON representing the `FullClientData` pydantic model:
+        ```json
+        {
+          "client_profile": { ... },
+          "children_education_profiles_calculations": { ... },
+          "asset_liability_analysis": { ... },
+          "financial_goals": null,
+          "retirement_plan": null,
+          "education_plans": null,
+          "debt_management_plan": null,
+          "financial_health_audit": null
+        }
+        ```
+  agent: AssetLiabilityAnalyzerAgent
+
+# # ############################## Task 4a: Goal Quantification Task ##############################
+goal_quantification_task:
+  description: >
+
+    STEP 1:
+      - You must call the tool `ComprehensiveGoalProcessingTool` exactly ONCE.
+        
+        * The INPUT ACTION for the tool is as follows:        
+        
+            ```json
+            {
+              "client_data_json": <<Output of task `asset_liability_analysis_task`, as provided in the context>>,
+              "default_inflation_rate_pa": 0.06
+            }
+            ```
+      - You must strictly follow the above INPUT ACTION, or else the tool will not run.
+      - The `ComprehensiveGoalProcessingTool` will process this input and return a new JSON string.
+            This returned string will be structured like:
+            `{"quantified_financial_goals": [List of FinancialGoal dictionary objects]}`.
+      
+    STEP 2: You must extract only the list part of the returned string from tool `ComprehensiveGoalProcessingTool` and store it as `goals_list`
+            The strcuture of the extracted `goals_list` must be [{...}, ...]. 
+            **Your final output of this task must be, the `goals_list` **
+
+  expected_output: >
+    A single, valid JSON object as shown below
+    If successful, the structure MUST be:
+
+      [
+        {
+          "goal_name": "<string_snake_case_value>",
+          "goal_type": "<string_snake_case_value>",
+          "target_year": <integer_value>,
+          "time_remaining_years": <integer_value>,
+          "estimated_current_cost_input": <float_value_or_null>,
+          "assumed_inflation_rate_pa_for_fv": <float_value_or_null>,
+          "estimated_future_cost_string": "<string_value_or_null>",
+          "priority": null,
+          "feasibility_notes": null
+        },
+        // ... potentially more goal objects following the same FinancialGoal structure
+      ]
+
+  agent: goal_quantification_agent
+
+
+# # # ############################# Task 4b: Goal Strategy and Integration Task ##############################
+goal_strategy_task:
+  description: > 
+      - You will be provided with the output of tasks `asset_liability_analysis_task` and `goal_quantification_task` in the context.
+      - You must refer the context from task `asset_liability_analysis_task` and sort the goals list i.e context from task `goal_quantification_task` considering the client’s age, dependents, liabilities, current assets, income, expenses, and any other factors that impact goal prioritization.
+      - Do ensure that this sorted goals_list is of the form list of dictionaries structure, like [{...}, {.....}, ....]
+      
+  expected_output: >
+     List of the goals sorted by the order such that the top ones are the higher priority ones.
+     The Structure of the output must be, list of dictionaries.
+
+     example of structure of the output: 
+          [
+             {
+                "goal_name": string,
+                "goal_type": string,
+                "target_year": int,
+                "time_remaining_years": int,
+                "estimated_current_cost_input": float,
+                "assumed_inflation_rate_pa_for_fv": float,
+                "estimated_future_cost_string": string,
+                "priority": string,
+                "feasibility_notes": string
+              }, 
+              {....}, ....
+          ]
+
+  agent: goal_strategy_agent
+
+
+
+
+
+#####################################################################################################################################
+
+goal_integration_task:
+  description: > 
+     - You will be provided with the output of task `goal_strategy_task` and `asset_liability_analysis_task` as context.
+     - Your goal is to merge these two provided contexts using `ClientDataMergeTool`
+     - The ACTION INPUT OF THE TOOL `ClientDataMergeTool` is as follows:
+
+            ```json
+            {
+             "inputs":
+            {
+              "initial_client_data": <<Output of task `asset_liability_analysis_task`, as provided in the context>>,
+              "financial_goals": <<Output of task `goal_strategy_task`, as provided in the context, ENSURE IT IS OF FORM List of dictionaries>>
+            }}
+            ```
+     - You must strictly follow the above structure for the tool `ClientDataMergeTool`.
+  expected_output: >
+     **Expected Final Output**
+
+     A single updated JSON representing the `FullClientData` pydantic json object:
+            ```json
+            {
+              "client_profile": { ... },
+              "children_education_profiles_calculations": { ... },
+              "asset_liability_analysis": { ... },
+              "financial_goals": [...],
+              "retirement_plan": null,
+              "education_plans": null,
+              "debt_management_plan": null,
+              "financial_health_audit": null
+            }
+            ```
+  agent: goal_integrate_agent
+
+##############################################################################################################################################
+
+################################### Task : retirement planner ###############################################
+RetirementPlannerTask:
+  description: >
+    
+    STEP 1: 
+          You will be provided with the output of task `client_profiling_task` as context.
+          You must pass this context of task `client_profiling_task` to the tool `retirement_planning_tool_custom` as follows:
+              
+              INPUT ACTION FOR TOOL `retirement_planning_tool_custom`.
+
+                 json```
+                 {
+                    "client_data_json": <<output of task `client_profiling_task`, provided in context>>
+                 }
+
+              ** STRICTLY FOLLOW THE ABOVE INPUT ACTION ONLY**
+
+          You must refer the output of the tool `retirement_planning_tool_custom` as `retirement_plan_json`
+    ---
+
+    STEP 2: MERGE RETIREMENT PLAN INTO FullClientData.
+ 
+        -You MUST call the ClientDataMergeTool exactly ONCE.
+         
+          ACTION INPUT:
+
+            Correct Example of Input Action Structure for ClientDataMergeTool:
+                
+                ```json
+                {
+                "inputs":
+                {
+                  "initial_client_data": <<output of task `goal_integration_task`, provided in the context>>,
+                  "retirement_plan": <<`retirement_plan_json`, dictionary from STEP 1>>
+                }}
+                ```
+
+        -You must strictly follow the above structure only for the tool `ClientDataMergeTool`.
+        -The ClientDataMergeTool will return a new, updated JSON object representing the FullClientData pydantic json object,
+          now including the retirement_plan field with your generated data.
+
+  expected_output: >
+
+    A single updated JSON representing the `FullClientData` pydantic model:
+    ```json
+    {
+      "client_profile": { ... },
+      "children_education_profiles_calculations": { ... },
+      "asset_liability_analysis": { ... },
+      "financial_goals": [....],
+      "retirement_plan": { ... },
+      "education_plans": null,
+      "debt_management_plan": null,
+      "financial_health_audit": null
+    }
+    ```
+    - The output must confirm to the above json object strictly, and must have all these fields even if they are null.
+
+  agent: RetirementPlannerAgent
+  
+
+################################### Task : retirement planner ###############################################
+
+
+############################# Task 10 : report_generation_task ##############################
+report_generation_task:
+  description: |
+    **Context**  
+    You receive **one** variable in context: `current_full_client_data_json` – a fully-populated **FullClientData** JSON object that already contains:  
+    • client profile & education timelines  
+    • asset-liability analysis with classifications and proportions  
+    • a prioritised, time-stamped list of goals  
+    • retirement-plan calculations and feasibility verdict  
+
+    **Deliverable – a single, well-structured Markdown report**
+
+    1. **Client Profile Snapshot** – age, family, income/expense highlights.  
+    2. **Investment-Horizon Buckets** – classify every goal into **Long (> 5 yrs)**, **Medium (3-5 yrs)**, **Short (< 3 yrs)** using `time_remaining_years`.  
+    3. **Risk-Appetite Commentary** – one paragraph explaining the assessed appetite and the drivers (age, equity exposure, horizon).  
+    4. **Assets & Liabilities Overview**  
+       - Table A: each asset with its ₹ value and % of total assets.  
+       - Table B: the same assets mapped to **Liquid / Retirement / Fixed** buckets.  
+    5. **Goal Dashboard** – table sorted by priority (already provided) listing goal name, target year, time left, future value string, and priority tag.  
+    6. **Financial-Health Panel** – Liquidity ratio, Flexibility rating, Asset-allocation vs. benchmark, Goal-feasibility flags, Savings & spending ratios. Highlight any red-flag thresholds breached.  
+    7. **Retirement Plan Deep-Dive**  
+       - Retirement age, years left, years in retirement.  
+       - Future monthly expense at retirement.  
+       - Corpus need: **Standard** vs **Segmented Cash-Flow** (three-phase) methods – show both figures.  
+       - Feasibility verdict (Expected Corpus ≥ Required Corpus?).  
+       - If gap exists, show:  
+         * Gap before and after 40 % expense-cut scenario.  
+         * Action sequence (reduce expenses, raise savings, defer goals).  
+       - Clear narrative paragraph summarising next steps to achieve retirement adequacy.
+
+    **Formatting rules**  
+    • Use level-2 (`##`) headings for each main section, level-3 (`###`) for sub-tables if needed.  
+    • All numbers: Indian currency formatting (₹ #,##,##,###) and % to two decimals.  
+    • Keep the tone professional, concise, and client-friendly.
+
+  expected_output: |
+    A single Markdown document covering sections 1-7 above. No extra commentary outside the report itself.
+
+  agent: ReportGeneratorAgent
+  

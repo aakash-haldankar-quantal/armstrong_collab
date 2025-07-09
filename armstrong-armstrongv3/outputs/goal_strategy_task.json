@@ -1,0 +1,103 @@
+```json
+[
+  {
+    "goal_name": "Higher Education",
+    "goal_type": "Other_higher_education",
+    "target_year": 2026,
+    "time_remaining_years": 3,
+    "estimated_current_cost_input": 10000000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 10000000.00 at 6.0% annual inflation over 3 years: 11910160.00",
+    "priority": "Highest",
+    "feasibility_notes": "Essential goal with a near-term horizon. Requires significant funding and prioritization given its imminent impact and large cost."
+  },
+  {
+    "goal_name": "Vacations",
+    "goal_type": "Other_vacations",
+    "target_year": 2024,
+    "time_remaining_years": 1,
+    "estimated_current_cost_input": 500000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 500000.00 at 6.0% annual inflation over 1 years: 530000.00",
+    "priority": "Medium",
+    "feasibility_notes": "Short-term discretionary goal. Feasible but should only be funded after addressing essential priorities."
+  },
+  {
+    "goal_name": "Electronic Gadget Or Clothes",
+    "goal_type": "Other_electronic_gadget_or_clothes",
+    "target_year": 2024,
+    "time_remaining_years": 1,
+    "estimated_current_cost_input": 200000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 200000.00 at 6.0% annual inflation over 1 years: 212000.00",
+    "priority": "Low",
+    "feasibility_notes": "Short-term discretionary goal. Can be deprioritized in favor of higher-priority needs."
+  },
+  {
+    "goal_name": "Car",
+    "goal_type": "Other_car",
+    "target_year": 2027,
+    "time_remaining_years": 4,
+    "estimated_current_cost_input": 4500000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 4500000.00 at 6.0% annual inflation over 4 years: 5681146.32",
+    "priority": "Medium",
+    "feasibility_notes": "Moderate-term discretionary goal. Can be planned post higher education funding."
+  },
+  {
+    "goal_name": "Sibling Wedding",
+    "goal_type": "Other_sibling_wedding",
+    "target_year": 2028,
+    "time_remaining_years": 5,
+    "estimated_current_cost_input": 1500000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 1500000.00 at 6.0% annual inflation over 5 years: 2007338.37",
+    "priority": "Medium",
+    "feasibility_notes": "Moderate-term family goal. Important but secondary to essential goals like higher education."
+  },
+  {
+    "goal_name": "coast_retirement",
+    "goal_type": "Retirement",
+    "target_year": 2033,
+    "time_remaining_years": 10,
+    "estimated_current_cost_input": 38000000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 38000000.00 at 6.0% annual inflation over 10 years: 68052212.47",
+    "priority": "High",
+    "feasibility_notes": "Long-term essential goal. Requires consistent savings over time to achieve financial security post-retirement."
+  },
+  {
+    "goal_name": "Home Loan Down Payment",
+    "goal_type": "Other_home_loan_down_payment",
+    "target_year": 2033,
+    "time_remaining_years": 10,
+    "estimated_current_cost_input": 5000000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 5000000.00 at 6.0% annual inflation over 10 years: 8954238.48",
+    "priority": "Medium",
+    "feasibility_notes": "Long-term goal related to homeownership. Important but can be sequenced after other critical objectives."
+  },
+  {
+    "goal_name": "Car 2",
+    "goal_type": "Other_car_2",
+    "target_year": 2033,
+    "time_remaining_years": 10,
+    "estimated_current_cost_input": 10000000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 10000000.00 at 6.0% annual inflation over 10 years: 17908476.97",
+    "priority": "Low",
+    "feasibility_notes": "Long-term discretionary goal. Can be deprioritized compared to other key objectives."
+  },
+  {
+    "goal_name": "Car 3",
+    "goal_type": "Other_car_3",
+    "target_year": 2035,
+    "time_remaining_years": 12,
+    "estimated_current_cost_input": 50000000.0,
+    "assumed_inflation_rate_pa_for_fv": 0.06,
+    "estimated_future_cost_string": "Projected future cost for current cost 50000000.00 at 6.0% annual inflation over 12 years: 100609823.59",
+    "priority": "Low",
+    "feasibility_notes": "Long-term aspirational goal. Can be pursued only after achieving all critical objectives."
+  }
+]
+```
